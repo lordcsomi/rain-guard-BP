@@ -39,9 +39,13 @@ for forecast_element in forecast_elements:
     weather_data[hour] = {"cloudiness": cloudiness, "temperature": temp_value, "wind": wind, "rain_chance": rain_chance_value}
     checked_hours.append(hour)
     
+rainy_hours = []
 for hour in CHECKED_HOURS:
     if weather_data[hour]["rain_chance"] is not None and int(weather_data[hour]["rain_chance"]) > RAIN_TRIGGER:
+        rainy_hours.append(hour)
         logging.info(f"Rain is expected at {hour} o'clock. {weather_data[hour]}")
+if len(rainy_hours) == 0:
+    logging.info("No rain is expected in the next few hours")
         
 ending_time = datetime.datetime.now()
 logging.info(f"Finished the weather forecast script at {ending_time}")
