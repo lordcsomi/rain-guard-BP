@@ -1,57 +1,79 @@
-# Weather Forecast Script
 
- This Python script is designed to provide weather forecasts for Budapest by scraping data from the idokep.hu website. It retrieves information about cloudiness, temperature, wind, and the probability of rain for specific hours of the day. The script logs this data to a file and checks for the likelihood of rain in the next few hours based on user-defined criteria.
+# Weather Forecast Service
 
-# Table of Contents
+This Python Flask application serves as a weather forecast service for Budapest. It retrieves weather data by scraping information from the idokep.hu website and provides this data through a RESTful API. The service fetches details such as cloudiness, temperature, wind, and the probability of rain for specific hours of the day.
 
- - [Installation](#installation)
- - [Usage](#usage)
- - [Customization](#customization)
- - [Contributing](#contributing)
+## Table of Contents
 
-# Installation
+- [Installation](#installation)
+- [Usage](#usage)
+- [Customization](#customization)
+- [API Endpoints](#api-endpoints)
+- [Contributing](#contributing)
 
- To use this script, follow these steps:
+## Installation
 
- 1. Ensure you have Python 3.x installed on your system.
+To use this service, follow these steps:
 
- 2. Clone or download this repository to your local machine.
+1. Ensure you have Python 3.x installed on your system.
 
- 3. Install the required libraries by running the following command:
+2. Clone or download this repository to your local machine.
 
-    ```bash
-    pip install requests beautifulsoup4
-    ```
-
- 4. Run the script:
+3. Install the required libraries by running the following command:
 
     ```bash
-    python weather_forecast.py
+    pip install Flask requests
     ```
 
-# Usage
+4. Run the Flask application:
 
- When you run the script, it will perform the following actions:
+    ```bash
+    python your_flask_app_filename.py
+    ```
 
- 1. Access the idokep.hu website to fetch the weather data for Budapest.
+## Usage
 
- 2. Check for the likelihood of rain at specific hours during the day (as specified in the `CHECKED_HOURS` list).
+When you run the Flask application, it will start a server at `http://localhost:5000` and provide the weather data through the defined API endpoints.
 
- 3. Log weather information, including cloudiness, temperature, wind speed, and rain probability to a file named `weather.log`.
+Access `http://localhost:5000/weather` to get the weather data in JSON format.
 
- 4. Identify and log hours when rain is expected based on the defined threshold (`RAIN_TRIGGER`).
+## API Endpoints
 
- The script will display information about rain expectations and will indicate if no rain is expected in the next few hours.
+The `/weather` endpoint returns the weather forecast for Budapest in the following format:
 
-# Customization
+```json
+[
+    {
+        "cloudiness": "erosen felhos",
+        "hour": "14:00",
+        "rain_chance": null,
+        "temperature": "23",
+        "wind": "Elenk delnyugati szel"
+    },
+    {
+        "cloudiness": "kozepesen felhos",
+        "hour": "15:00",
+        "rain_chance": null,
+        "temperature": "23",
+        "wind": "Mersekelt delnyugati szel"
+    },
+    // ... Additional hours
+]
+```
 
- You can customize the script by modifying the following variables:
+Each entry in the response represents the weather forecast for a specific hour. The data includes details such as cloudiness, temperature, wind, and the probability of rain.
 
- - `CHECKED_HOURS`: Change this list to specify the hours you want to check for rain. You can add or remove hours as needed.
+## Contributing
 
- - `RAIN_TRIGGER`: Adjust this value to change the probability threshold for considering rain. If the rain chance at a specified hour is greater than or equal to this threshold, the script will log it.
+If you'd like to contribute to this Flask-based weather service, feel free to fork the repository and submit a pull request with your enhancements. Ensure adherence to best practices for code quality and documentation.
 
-# Contributing
+Make sure to test your changes and provide clear descriptions in your pull request.
 
- If you'd like to contribute to this project, feel free to fork the repository and submit a pull request with your enhancements. Please follow best practices for code quality and documentation.
+---
 
+**Server Information:**
+
+- **IP**: 0.0.0.0
+- **Port**: 5000
+
+**Note**: Access `/weather` to retrieve weather data once the Flask application is running.
