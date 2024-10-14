@@ -22,13 +22,13 @@ To use this service, follow these steps:
 3. Install the required libraries by running the following command:
 
     ```bash
-    pip install Flask requests
+    pip install Flask requests beautifulsoup4
     ```
 
 4. Run the Flask application:
 
     ```bash
-    python your_flask_app_filename.py
+    python server.py
     ```
 
 ## Usage
@@ -56,12 +56,23 @@ The `/weather` endpoint returns the weather forecast for Budapest in the followi
         "rain_chance": null,
         "temperature": "23",
         "wind": "Mersekelt delnyugati szel"
-    },
+    }
     // ... Additional hours
 ]
 ```
 
 Each entry in the response represents the weather forecast for a specific hour. The data includes details such as cloudiness, temperature, wind, and the probability of rain.
+
+## Customization
+
+You can customize the behavior of the Flask application by modifying the following variables in the `server.py` file:
+
+- **PORT**: Change the port on which the Flask application runs.
+- **HOST**: Modify the host IP (default is `0.0.0.0` to make it accessible locally).
+- **URL**: Update the URL if you want to scrape weather data from a different location or website.
+- **API**: Change the endpoint where weather data is accessed.
+
+Additionally, you can extend or modify the data scraping logic to include more details, such as humidity, air pressure, or visibility. The `replace_dict` can also be expanded or customized for additional Hungarian character replacements.
 
 ## Contributing
 

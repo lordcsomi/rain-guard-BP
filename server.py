@@ -3,8 +3,15 @@ from bs4 import BeautifulSoup
 import requests
 
 
-app = Flask("weather")
+# config
+REPLACE = True
+PORT = 5000
+HOST = '0.0.0.0'
 URL = "https://www.idokep.hu/elorejelzes/budapest"
+API = "/weather"
+
+
+app = Flask("weather")
 weather_data_list = []
 
 replace_dict = {
@@ -28,7 +35,7 @@ replace_dict = {
     "ű": "u"
 }
 
-@app.route('/weather', methods=['GET'])
+@app.route(API, methods=['GET'])
 def get_weather():
     response = requests.get(URL)
     if response.status_code != 200:
@@ -52,9 +59,10 @@ def get_weather():
         rain_chance_value = forecast_element.find("div", class_="ik hourly-rain-chance").a.text.strip().split("%")[0] if forecast_element.find("div", class_="ik hourly-rain-chance") else None
 
         # replace Hungarian characters with English ones
-        for hungarian, english in replace_dict.items():
-            cloudiness = cloudiness.replace(hungarian, english)
-            wind = wind.replace(hungarian, english)
+        if REPLACE:
+            for hungarian, english in replace_dict.items():
+                cloudiness = cloudiness.replace(hungarian, english)
+                wind = wind.replace(hungarian, english)
 
         hourly_data = {
             "hour": hour,
@@ -72,8 +80,6 @@ def page_not_found(error):
     return redirect('/weather')
 
 if __name__ == '__main__':
-    host = '0.0.0.0'
-    port = 5000
-    print(f"Server IP: {host}, Port: {port}")
+    print(f"Server IP: {HOST}, Port: {PORT}")
     print(f"Access /weather to get weather data")
-    app.run(host=host, port=port)
+    app.run(host=HOST, port=PORT)
